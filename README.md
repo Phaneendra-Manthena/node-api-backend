@@ -30,4 +30,4 @@ These variables need to be set
 * First we need to build the application through docker build.
 * Push to AWS ECR Repo.
 
-![alt text](api-backend.jpeg)..
+![alt text](api-backend.jpeg).
