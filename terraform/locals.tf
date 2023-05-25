@@ -7,7 +7,12 @@ locals {
   rds_secret_srn = data.aws_ssm_parameter.rds_secret_srn.value
   app_alb_security_group_id = data.aws_ssm_parameter.app_alb_security_group_id.value
   vpc_id = data.aws_ssm_parameter.vpc_id.value
-  rds_endpoint = data.aws_ssm_parameter.rds_endpoint.value
+  rds_endpoint = split(":",data.aws_ssm_parameter.rds_endpoint.value)[0]
+  rds_security_group_id = data.aws_ssm_parameter.rds_security_group_id.value
+  ecs_cluster_id = data.aws_ssm_parameter.ecs_cluster_id.value
+  private_subnet_ids = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
+  target_group_arn = data.aws_ssm_parameter.target_group_arn.value
+  container_name = "api-ecs"
   env_vars = [
     {
         "name" : "PORT",
@@ -27,7 +32,7 @@ locals {
     },
     {
         "name" : "DBPORT",
-        "value" : "3306"
+        "value" : "5432"
     }
   ]
 
