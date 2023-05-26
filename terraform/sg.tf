@@ -11,7 +11,7 @@ egress {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
-resource "aws_security_group_rule" "example" {
+resource "aws_security_group_rule" "api_eci_rule" {
   type              = "ingress"
   from_port         = 3000
   to_port           = 3000
@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "example" {
   security_group_id = aws_security_group.api_ecs.id
   source_security_group_id = local.app_alb_security_group_id
 }
-# allowing traffic from API ECS on 3306
+# allowing traffic from API ECS on 5432
 resource "aws_security_group_rule" "rds_rule" {
   description = "allowing traffic from API ECS on 5432"
   type              = "ingress"

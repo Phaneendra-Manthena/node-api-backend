@@ -11,7 +11,7 @@ locals {
   rds_security_group_id = data.aws_ssm_parameter.rds_security_group_id.value
   ecs_cluster_id = data.aws_ssm_parameter.ecs_cluster_id.value
   private_subnet_ids = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
-  target_group_arn = data.aws_ssm_parameter.target_group_arn.value
+  app_target_group_arn = data.aws_ssm_parameter.app_target_group_arn.value
   container_name = "api-ecs"
   env_vars = [
     {

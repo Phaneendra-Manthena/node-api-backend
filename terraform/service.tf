@@ -18,6 +18,14 @@ resource "aws_ecs_task_definition" "api" {
                     "containerPort": 3000
                 }
             ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                 "options": {
+                  "awslogs-group": "${aws_cloudwatch_log_group.api.name}",
+                  "awslogs-region": "us-east-1",
+                   "awslogs-stream-prefix": "ecs-api"
+                }
+            },       
             "environment" : ${jsonencode(local.env_vars)},
             "secrets": ${jsonencode(local.application_secrets)}
             
@@ -37,8 +45,12 @@ network_configuration {
   security_groups = [aws_security_group.api_ecs.id]
 }
 load_balancer {
-  target_group_arn = local.target_group_arn
+  target_group_arn = local.app_target_group_arn
   container_name = local.container_name
   container_port = 3000
 }
+}
+resource "aws_cloudwatch_log_group" "api" {
+  name = "timing/ecs/api"
+  tags = local.tags
 }
